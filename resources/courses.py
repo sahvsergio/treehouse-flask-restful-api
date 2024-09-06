@@ -1,8 +1,16 @@
 from flask import jsonify, Blueprint
-from flask_restful import  Resource, Api, reqparse, inputs
+from flask_restful import  Resource, Api, reqparse, inputs, fields
 #from flask.ext.restful import Resource
 
 import models
+
+course_fields={
+    'id':fields.Integer,
+    'title':fields.String,
+    'url':fields.String, 
+    'reviews':fields.List(fields.String)
+
+    }
 
 class Courselist(Resource):
 
@@ -11,17 +19,17 @@ class Courselist(Resource):
         self.reqparse.add_argument(
             'title',
             required=True,
-            help='No course title  provided,
+            help='No course title  provided',
             location=['form', 'json'])
 
         self.reqparse.add_argument(
             'url',
             required=True,
             help='No course URL provided',
-            location=['form', 'json']
+            location=['form', 'json'],
             type=inputs.url
             )
-            super().__init__()
+        super().__init__()
 
 
     def get(self):
